@@ -1,0 +1,29 @@
+---
+# defaults file for rabbitmq-installer
+
+#####
+# This role is meant to be inherited by other perfSONAR roles in order to
+# automate a standardized method for software installation.
+
+# The OS packages are updated (yum or apt) prior to install perfSONAR packages.
+# This is recommended as an outdated OS might contain security vulnerabilities.
+#
+#rabbitmq_os_update: True
+#rabbitmq_os_update: False
+#
+rabbitmq_os_update: True
+
+# perfSONAR bundle to install
+# Refer to the list of all perfSONAR bundles at
+# http://docs.elastic.net/install_options.html
+#
+# This variable is meant to be set by other roles that depend on this one
+#
+# rabbitmq_bundle: rabbitmq-testpoint
+# rabbitmq_bundle: rabbitmq-toolkit
+# rabbitmq_bundle: rabbitmq-psconfig-publisher
+#
+# rabbitmq_bundle: []
+
+# optional packages
+# rabbitmq_optional_packages: []

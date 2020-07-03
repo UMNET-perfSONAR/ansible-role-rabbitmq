@@ -1,0 +1,60 @@
+---
+# tasks file for elastic-installer
+
+# Install the elastic repos and base OS updates
+- name: "{{ ansible_os_family }} Install"
+  tags: [ 'ps::install' ]
+  include: "{{ ansible_os_family }}.yml"
+  when: ansible_os_family | default('') != ''
+
+- name: Erlang download
+  package:
+    name: erlang
+    state: present
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
+  register: sel
+
+- name: open port for rabbitmq
+  ufw:
+    rule: allow
+    port: "5672"
+    proto: tcp
+
+- name: reboot
+  reboot:
+  when: sel.changed
+
+- name: copying rabbitmq repo
+  get_url:
+    url: https://raw.githubusercontent.com/perfsonar/archiving-sandbox/master/central-archive/files/rabbit.repo
+    dest: /etc/yum.repos.d/rabbit.repo
+
+- name: install package
+  package:
+    name:
+      - python-psutil
+      - python-pika
+      - python3
+      - python3-requests
+      - erlang
+      - rabbitmq-server
+    state: present
+
+- name: reload daemon
+  systemd:
+    daemon_reload: yes
+
+- name: start rabbitmq
+  systemd:
+    enabled: yes
+    name: rabbitmq-server
+    state: started
+
+- name: enable rabbitmq-management
+  rabbitmq_plugin:
+    names: rabbitmq_management
+    state: enabled
+
