@@ -1,21 +1,79 @@
 ---
-# tasks file for elastic-installer
 
-# Install the elastic repos and base OS updates
-- name: "{{ ansible_os_family }} Install"
-  tags: [ 'ps::install' ]
-  include: "{{ ansible_os_family }}.yml"
-  when: ansible_os_family | default('') != ''
-
-- name: Erlang download
-  package:
-    name: erlang
+- name: keyserver
+  apt_key:
+    url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
     state: present
 
-- name: Disable SELinux
-  selinux:
-    state: disabled
-  register: sel
+- name: https transport 
+  apt: 
+    name: apt-transport-https
+    state: present 
+
+- name: create file
+  lineinfile:
+    path: /etc/apt/sources.list.d/bintray.rabbitmq.list
+    line: deb https://dl.bintray.com/rabbitmq-erlang/debian bionic erlang-22.x
+    create: yes
+
+- name: add rabbitmq
+  lineinfile:
+    path: /etc/apt/sources.list.d/bintray.rabbitmq.list
+    line: deb https://dl.bintray.com/rabbitmq/debian bionic main
+    create: yes
+
+#- name: adding repository
+ # get_url: 
+  #  url: https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+   # dest: /etc
+
+#- name: depackage
+ # dpkg_selections:
+  #  name: erlang-solutions_1.0 
+   # selection: install
+
+- name: Upgrade all packages to the latest version
+  apt:
+    name: "*"
+    state: latest
+
+#- name: shell try 
+#  shell: apt-get install rabbitmq-server -y --fix-missing
+#- name: install rabbitmq
+ # apt: 
+  #  name: rabbitmq-server
+   # state: latest
+    #install_recommends: yes
+
+- name: install package
+  #ignore_errors: yes
+  package: 
+    name: 
+      - erlang-base
+      - erlang-asn1 
+      - erlang-crypto
+      - erlang-eldap
+      - erlang-ftp 
+      - erlang-inets 
+      - erlang-mnesia
+      - erlang-os-mon 
+      - erlang-parsetools
+      - erlang-public-key 
+      - erlang-runtime-tools 
+      - erlang-snmp 
+      - erlang-ssl
+      - erlang-syntax-tools 
+      - erlang-tftp 
+      - erlang-tools 
+      - erlang-xmerl
+      - erlang-nox
+    state: present 
+
+
+#- name: Disable SELinux
+ # selinux:
+  #  state: disabled
+ # register: sel
 
 - name: open port for rabbitmq
   ufw:
@@ -23,25 +81,41 @@
     port: "5672"
     proto: tcp
 
-- name: reboot
-  reboot:
-  when: sel.changed
+#- name: reboot
+ # reboot:
+  #when: sel.changed
 
-- name: copying rabbitmq repo
-  get_url:
-    url: https://raw.githubusercontent.com/perfsonar/archiving-sandbox/master/central-archive/files/rabbit.repo
-    dest: /etc/yum.repos.d/rabbit.repo
+#- name: copying rabbitmq repo
+ # get_url:
+ #   url: https://raw.githubusercontent.com/perfsonar/archiving-sandbox/master/central-archive/files/rabbit.repo
+#    dest: /etc/yum.repos.d/rabbit.repo
+
 
 - name: install package
+  ignore_errors: yes  
   package:
     name:
       - python-psutil
       - python-pika
       - python3
       - python3-requests
-      - erlang
-      - rabbitmq-server
+      - socat
+      - logrotate
+      - init-system-helpers
+      - adduser
+      - wget
+     # - rabbitmq-server
     state: present
+
+- name: get package
+  get_url: 
+    url: https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.5/rabbitmq-server_3.8.5-1_all.deb
+    dest: /etc
+
+- name: depackage
+  dpkg_selections:
+    name: rabbitmq-server_3.8.5-1_all.deb
+    selection: install
 
 - name: reload daemon
   systemd:
