@@ -22,31 +22,22 @@
     line: deb https://dl.bintray.com/rabbitmq/debian bionic main
     create: yes
 
-#- name: adding repository
- # get_url: 
-  #  url: https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
-   # dest: /etc
+- name: adding repository
+  get_url: 
+    url: https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+    dest: /etc
 
-#- name: depackage
- # dpkg_selections:
-  #  name: erlang-solutions_1.0 
-   # selection: install
+- name: depackage
+  dpkg_selections:
+    name: erlang-solutions_1.0 
+    selection: install
 
 - name: Upgrade all packages to the latest version
   apt:
     name: "*"
     state: latest
 
-#- name: shell try 
-#  shell: apt-get install rabbitmq-server -y --fix-missing
-#- name: install rabbitmq
- # apt: 
-  #  name: rabbitmq-server
-   # state: latest
-    #install_recommends: yes
-
 - name: install package
-  #ignore_errors: yes
   package: 
     name: 
       - erlang-base
@@ -104,7 +95,7 @@
       - init-system-helpers
       - adduser
       - wget
-     # - rabbitmq-server
+      - rabbitmq-server
     state: present
 
 - name: get package
