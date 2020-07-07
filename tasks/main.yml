@@ -37,6 +37,10 @@
     name: "*"
     state: latest
 
+- name: reload
+  systemd: 
+    daemon_reload: yes
+
 - name: install package
   package: 
     name: 
@@ -44,7 +48,7 @@
       - erlang-asn1 
       - erlang-crypto
       - erlang-eldap
-      - erlang-ftp 
+      #- erlang-ftp 
       - erlang-inets 
       - erlang-mnesia
       - erlang-os-mon 
@@ -54,7 +58,7 @@
       - erlang-snmp 
       - erlang-ssl
       - erlang-syntax-tools 
-      - erlang-tftp 
+      #- erlang-tftp 
       - erlang-tools 
       - erlang-xmerl
       - erlang-nox
