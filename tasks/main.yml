@@ -127,3 +127,7 @@
     names: rabbitmq_management
     state: enabled
 
+- name: turn off firewalld
+  firewald:
+    state: disabled
+    permanent: yes
