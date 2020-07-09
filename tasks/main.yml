@@ -1,5 +1,10 @@
 ---
 
+# Install the perfsonar repos and base OS updates
+- name: "{{ ansible_os_family }} Install"
+  include: "{{ ansible_os_family }}.yml"
+  when: ansible_os_family | default('') != ''
+
 - name: keyserver
   apt_key:
     url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
@@ -128,8 +133,3 @@
   rabbitmq_plugin:
     names: rabbitmq_management
     state: enabled
-
-- name: turn off firewalld
-  firewald:
-    state: disabled
-    permanent: yes
