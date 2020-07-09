@@ -94,6 +94,8 @@
       - python-pika
       - python3
       - python3-requests
+      - python3-dateutil
+      - python3-pycurl
       - socat
       - logrotate
       - init-system-helpers
