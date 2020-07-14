@@ -123,6 +123,11 @@
   systemd:
     daemon_reload: yes
 
+- name: stop firewalld
+  systemd:
+     name: firewalld
+     state: stopped
+     
 - name: start rabbitmq
   systemd:
     enabled: yes
