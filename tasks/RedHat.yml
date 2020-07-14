@@ -9,10 +9,10 @@
     name: epel-release
     state: present
 
-- name: turn off firewalld
-  firewalld:
-    state: disabled
-    permanent: yes
+#- name: turn off firewalld
+ # firewalld:
+  #  state: disabled
+   # permanent: yes
 
 # Make sure we have the latest upgrades installed
 #- name: (RedHat) Install system updates
