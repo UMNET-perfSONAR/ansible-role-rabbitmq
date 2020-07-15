@@ -9,6 +9,11 @@
     name: epel-release
     state: present
 
+- name: disable selinux
+  selinux:
+    state: disable  
+  register: sel
+
 # Make sure we have the latest upgrades installed
 #- name: (RedHat) Install system updates
 #  tags: [ 'elastic::install' ]

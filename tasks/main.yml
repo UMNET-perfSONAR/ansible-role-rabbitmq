@@ -12,16 +12,10 @@
     name: erlang
     state: present
 
-- name: Disable SELinux
-  selinux:
-    state: disabled
-  register: sel
-
-- name: open port for rabbitmq
-  ufw:
-    rule: allow
-    port: "5672"
-    proto: tcp
+#- name: Disable SELinux
+ # selinux:
+  #  state: disabled
+  #register: sel
 
 - name: reboot
   reboot:
@@ -46,6 +40,12 @@
 - name: reload daemon
   systemd:
     daemon_reload: yes
+
+- name: open port for rabbitmq
+  ufw:
+    rule: allow
+    port: "5672"
+    proto: tcp
 
 - name: start rabbitmq
   systemd:
