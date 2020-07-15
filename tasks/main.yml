@@ -10,12 +10,11 @@
     url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
     state: present
 
-<<<<<<< HEAD
 #- name: Disable SELinux
  # selinux:
   #  state: disabled
   #register: sel
-=======
+
 - name: https transport 
   apt: 
     name: apt-transport-https
