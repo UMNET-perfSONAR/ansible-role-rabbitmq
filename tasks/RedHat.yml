@@ -9,10 +9,17 @@
     name: epel-release
     state: present
 
+<<<<<<< HEAD
 - name: disable selinux
   selinux:
     state: disable  
   register: sel
+=======
+#- name: turn off firewalld
+ # firewalld:
+  #  state: disabled
+   # permanent: yes
+>>>>>>> 3f0e8e75c8964c912c627c6d6de90af5fd1334c8
 
 # Make sure we have the latest upgrades installed
 #- name: (RedHat) Install system updates

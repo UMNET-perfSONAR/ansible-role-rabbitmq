@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 ###
 
+=======
+- name: Ubuntu says hi
+  debug:
+    var: ansible_os_family
+>>>>>>> 3f0e8e75c8964c912c627c6d6de90af5fd1334c8
