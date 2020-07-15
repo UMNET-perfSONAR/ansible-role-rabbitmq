@@ -85,7 +85,6 @@
     rule: allow
     port: "5672"
     proto: tcp
->>>>>>> 3f0e8e75c8964c912c627c6d6de90af5fd1334c8
 
 #- name: reboot
  # reboot:
