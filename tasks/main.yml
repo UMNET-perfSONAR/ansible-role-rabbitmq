@@ -150,12 +150,12 @@
     names: rabbitmq_management
     state: enabled
 
-- name: add in the default rabbitmq user
-  rabbitmq_user:
-    user: hi 
-    password: hi
-    vhost: /
-    configure_priv: .*
-    read_priv: .*
-    write_priv: .*
-    state: present
+#- name: add in the default rabbitmq user
+ # rabbitmq_user:
+  #  user: hi 
+   # password: hi
+    #vhost: /
+    #configure_priv: .*
+    #read_priv: .*
+    #write_priv: .*
+    #state: present
