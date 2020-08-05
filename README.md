@@ -2,6 +2,9 @@ perfSONAR-installer Ansible role
 ================================
 
 This roles installs a perfSONAR bundle, and additional support packages.
+If adding the RMQ user fails do it by hand by running
+rabbitmqctl add_user hi hi 
+rabbitmqctl set_permissions -p / hi ".*" ".*" ".*"
 
 Requirements
 ------------
